@@ -1,0 +1,4 @@
+accounts/migrations/
+main/migrations/
+.idea/
+conf/secrets.json
