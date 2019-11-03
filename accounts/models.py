@@ -18,7 +18,7 @@ class SimpleUser(models.Model):
     self_pr = models.CharField(max_length=50, default="#이런사람") # 해시태그로 자기소개
     SEX_CHOICES = (
         ('F', 'Female'),
-        ('M','Male'),
+        ('M', 'Male'),
     )
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='F')
 
