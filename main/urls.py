@@ -4,7 +4,7 @@ from . import views
 app_name = 'main'  # namespace 추가
 
 urlpatterns = [
-    path('', views.showSchedule),
+    path('', views.show_schedule),
     path('roomList/', views.SimpleRoomListView.as_view()),
-    # path('<int:pk>/', views.DetailPost.as_view()),
+    path('roomEnter/',views.RoomEnterView.as_view()),
 ]

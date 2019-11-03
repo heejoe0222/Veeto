@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Room
+from .models import Room, RoomUser
 from accounts.serializers import UserSerializer
 
 
@@ -16,6 +16,13 @@ class SimpleRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         exclude = ('members','activity','date',)
+
+
+class RoomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoomUser
+        fields = '__all__'
+
 
 
 

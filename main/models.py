@@ -13,7 +13,7 @@ class Activity(models.Model):
 class Room(models.Model):
     room_name = models.CharField(max_length=100, default="액티비티 같이 해요~!")  # 방 이름(소개) - 50자 이내
     #master = models.ManyToManyField(SimpleUser, through='Own', related_name="rooms_I_own")
-    members = models.ManyToManyField(SimpleUser, through='Join', through_fields=('room','user'))  # simpleuser.room_set 또는 rooms.members
+    members = models.ManyToManyField(SimpleUser, through='RoomUser', through_fields=('room','user'))  # simpleuser.room_set 또는 rooms.members
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
     date = models.DateField()  # 활동 날짜
     time = models.TimeField()  # 활동 시간
@@ -31,7 +31,8 @@ class Room(models.Model):
     class Meta:
         ordering = ['date', 'time']
 
-class Join(models.Model):
+
+class RoomUser(models.Model):
     user = models.ForeignKey(SimpleUser, on_delete=models.PROTECT)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     is_master = models.BooleanField(default=False)
