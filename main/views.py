@@ -33,7 +33,7 @@ def show_schedule(request):
 
 
 # 날짜, 액티비티종류(date,pk) 파라미터로 get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
-# HTTP GET, /api/roomList?date=%Y-%m-%d&pk=activity_pk_#
+# HTTP GET, /api/roomList?date=%Y-%m-%d&pk=activity_pk_# -> date 나누자
 class SimpleRoomListView(generics.ListAPIView):
     serializer_class = SimpleRoomSerializer
 
