@@ -14,18 +14,21 @@ from main.serializers import RoomSerializer, SimpleRoomSerializer, RoomUserSeria
 def show_schedule(request):
     if request.method == 'GET':
         today = date.today()
-        schedule = {}
+        schedule = []
         for i in range(14):
-            roomNum_list=[]
+            roomNum_dict={}
             activity_date = today + timedelta(days=i)
-            roomNum_list.append(activity_date.weekday())  # 날짜에 대한 요일 표시
-            room_num_set={}
+            roomNum_dict["year"] = activity_date.year
+            roomNum_dict["month"] = activity_date.month
+            roomNum_dict["day"] = activity_date.day
+
+            room_num_list=[]
             activity_num = Activity.objects.all().count()
             for id in range(1,activity_num+1):  # 특정 날짜 -> 액티비티별 생성된 방 개수
-                room_num_set[id] = Room.objects.filter(date=activity_date, activity=Activity.objects.get(pk=id)).count()
-            roomNum_list.append(room_num_set)
+                room_num_list.append(Room.objects.filter(date=activity_date, activity=Activity.objects.get(pk=id)).count())
+            roomNum_dict["rooms"] = room_num_list
             #schedule[activity_day.strftime('%y%m%d')] = roomNum_list  # 191104 형식
-            schedule[str(activity_date)] = roomNum_list  # 2019-11-04 형식
+            schedule.append(roomNum_dict)  # 2019-11-04 형식
         return Response(schedule, status=status.HTTP_200_OK)
 
 
