@@ -14,12 +14,10 @@ defusedxml==0.6.0
 Django==2.2.5
 django-cors-headers==3.1.1
 django-model-utils==3.2.0
-django-mysql==3.2.0
 djangorestframework==3.10.3
 docutils==0.14
 entrypoints==0.3
 freeze==1.0.10
-gensim==3.7.3
 idna==2.8
 ipykernel==5.1.1
 ipython==7.5.0
@@ -30,16 +28,6 @@ Jinja2==2.10.1
 jmespath==0.9.4
 JPype1==0.6.3
 jsonschema==3.0.1
-jupyter==1.0.0
-jupyter-client==5.2.4
-jupyter-console==6.0.0
-jupyter-core==4.4.0
-kiwisolver==1.1.0
-konlpy==0.5.1
-MarkupSafe==1.1.1
-matplotlib==3.1.0
-mistune==0.8.4
-mysqlclient==1.4.4
 nbconvert==5.5.0
 nbformat==4.4.0
 nltk==3.4.1
@@ -47,7 +35,6 @@ notebook==5.7.8
 numpy==1.16.4
 pandocfilters==1.4.2
 parso==0.4.0
-pickleshare==0.7.5
 Pillow==6.2.1
 prometheus-client==0.6.0
 prompt-toolkit==2.0.9
