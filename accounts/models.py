@@ -11,13 +11,14 @@ class University(models.Model):
 # mvp 구현을 위한 임시 모델 -> 이후 USER 클래스 상속 예정
 class SimpleUser(models.Model):
     user_name = models.CharField(max_length=10)
+    user_nickname = models.CharField(max_length=15) #unique=True
     age = models.IntegerField()
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     major = models.CharField(max_length=50, default="전공미입력")  # not null로 바꿀수도
     self_pr = models.CharField(max_length=50, default="#이런사람") # 해시태그로 자기소개
     SEX_CHOICES = (
         ('F', 'Female'),
-        ('M','Male'),
+        ('M', 'Male'),
     )
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, default='F')
 
