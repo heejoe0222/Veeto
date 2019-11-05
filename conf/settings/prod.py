@@ -12,4 +12,5 @@ DATABASES = {
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_ALLOW_WHITELIST = [
     'localhost:3000' #나중에 now 링크 쓰기
+    'https://veeto-cli.gywls517.now.sh:3000'
 ]

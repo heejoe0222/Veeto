@@ -15,8 +15,8 @@ import os, json
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_DIR = os.path.join(BASE_DIR, 'conf')
-with open(os.path.join(SECRET_DIR, 'secrets.json'), 'rb') as secret_file:
+PROJECT_DIR = os.path.join(BASE_DIR, 'conf')
+with open(os.path.join(BASE_DIR, 'secrets.json'), 'rb') as secret_file:
     secrets = json.load(secret_file)
 
 SECRET_KEY = secrets['SECRET_KEY']
