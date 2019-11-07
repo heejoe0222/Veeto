@@ -8,7 +8,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'veeto_db',
         'USER': 'postgres',
-        'PASSWORD': 'chj8399302',
+        'PASSWORD': 'veeto5',
         'PORT': 5432,
         "HOST": "127.0.0.1",
     }
