@@ -79,6 +79,7 @@ class RoomCreateView(generics.CreateAPIView):
 
 # 방 상세 페이지 볼 때(방 만든 후, 방 참가한 후, 방 목록 리스트에서 접근할 때) -> user와 room_pk 전송하면 해당하는 RoomSerializer 전송
 # get 요청이 보안 상 괜찮을지..?
+# HTTP GET, /api/roomDetail/?user=user_pk_#&room=room_pk_#
 class RoomDetailView(generics.RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
