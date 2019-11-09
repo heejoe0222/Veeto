@@ -8,45 +8,32 @@ from accounts.models import SimpleUser
 from main.models import Room, Activity, RoomUser
 from main.serializers import RoomSerializer, SimpleRoomSerializer, RoomUserSerializer
 
-# 날짜별 액티비티별 방 개수 전송하는 api
-# HTTP GET, /api
-@api_view(['GET'])
-def show_schedule(request):
-    if request.method == 'GET':
-        today = date.today()
-        schedule = []
-        for i in range(14):
-            roomNum_dict={}
-            activity_date = today + timedelta(days=i)
-            roomNum_dict["year"] = activity_date.year
-            roomNum_dict["month"] = activity_date.month
-            roomNum_dict["day"] = activity_date.day
-
-            room_num_list=[]
-            activity_num = Activity.objects.all().count()
-            for id in range(1,activity_num+1):  # 특정 날짜 -> 액티비티별 생성된 방 개수
-                room_num_list.append(Room.objects.filter(date=activity_date, activity=Activity.objects.get(pk=id)).count())
-            roomNum_dict["rooms"] = room_num_list
-            schedule.append(roomNum_dict)
-        return Response(schedule, status=status.HTTP_200_OK)
-
-
-# 날짜, 액티비티종류(date,pk) 파라미터로 get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
-# HTTP GET, /api/roomList?year=#&month=#&day=#&pk=activity_pk_#
-class SimpleRoomListView(generics.ListAPIView):
+# 날짜 get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
+# HTTP GET, /api/roomList/{year}/{month}/{day}
+class SimpleRoomListByDateView(generics.ListAPIView):
     serializer_class = SimpleRoomSerializer
 
     def get_queryset(self):
             queryset = Room.objects.all()
-            year = self.request.GET.get('year', None)
-            month = self.request.GET.get('month', None)
-            day = self.request.GET.get('day', None)
-            activity_pk = self.request.GET.get('pk',None)
-            if year is not None and month is not None and day is not None and activity_pk is not None:
+            year = self.kwargs.get('year')
+            month = self.kwargs.get('month')
+            day = self.kwargs.get('day')
+            if year is not None and month is not None and day is not None:
                 activity_date = date(int(year), int(month), int(day))
-                queryset = queryset.filter(date=activity_date,activity=Activity.objects.get(pk=int(activity_pk)))
+                queryset = queryset.filter(date=activity_date)
             return queryset
 
+# 액티비티종류(pk) get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
+# HTTP GET, /api/roomList/{pk}
+class SimpleRoomListByActivityView(generics.ListAPIView):
+    serializer_class = SimpleRoomSerializer
+
+    def get_queryset(self):
+        queryset = Room.objects.all()
+        activity_pk = self.kwargs.get('pk')
+        if activity_pk is not None:
+            queryset = queryset.filter(activity=Activity.objects.get(pk=int(activity_pk)))
+        return queryset
 
 # 참여하기 눌렀을 때 -> 해당 방 pk(+유저정보)와 함께 post 요청 -> RoomUser 관계 생성 + 방 참여한 결과 status 보내주는 api
 # 방 참여 시 고려해야될 점: 성비, 같은 날짜에 유저의 다른 방 참가 여부, 방의 총 인원 수, RoomUser 관계 이미 있진 않은지? -> 구현해야

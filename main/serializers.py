@@ -15,7 +15,7 @@ class SimpleRoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        exclude = ('members','activity','date',)
+        exclude = ('members',)
 
 
 class RoomUserSerializer(serializers.ModelSerializer):

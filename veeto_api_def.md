@@ -1,55 +1,48 @@
-#### 1. 메인화면
-날짜 및 액티비티별 방 개수 보여주는 api
-* HTTP GET, `/api`     
-  * response example :
-  ```
-    [
-        {
-            "year": 2019,
-            "month": 11,
-            "day": 6,
-            "rooms": [
-                0,
-                0,
-                1
-            ]
-        },
-        {
-            "year": 2019,
-            "month": 11,
-            "day": 7,
-            "rooms": [
-                0,
-                0,
-                0
-            ]
-        },
-        ...
-    ]    
-  ```
-
-#### 2. 메인-액티비티 선택 화면
-날짜와 액티비티 선택하면 간략한 방 정보 목록 보여주는 api
-* HTTP GET, `/api/roomList?year=#&month=#&day=#&pk=activity_pk_#`  
-(요청 예시> api/roomList?year=2019&month=11&day=6&pk=1)  
+#### 1. 메인-날짜를 선택하기 화면
+* HTTP GET, `/api/roomList/{year}/{month}/{day}`  
+(요청 예시> api/roomList/2019/11/5)  
   * response example :
    ```
     [
         {
-            "id": 4,                         # room_pk_#
-            "number_of_members": 1,          # 현재 참여인원
+            "id": 4,
+            "number_of_members": 2,
             "room_name": "볼링 고고우",
+            "date": "2019-11-05",
             "time": "12:00:00",
             "place": "이화볼링장",
-            "total_number_of_members": 3,    # 총 인원
-            "sex_ratio": 0,                  # 성비 맞출지 여부 (0-무관, 1-성비맞춤, 2-같은성별만)
-            "is_Confirm": false              # 방 확정여부
+            "total_number_of_members": 3,
+            "sex_ratio": 0,
+            "is_Confirm": false,
+            "activity": 1
         }
+        ...
     ]
    ```
-#### 3. 메인-액티비티 선택 화면 
-목록에서 방 선택 후 참여하기 버튼 누르면 선택한 방에 참여 -> 참여한 결과 status 보내주는 api
+#### 2. 메인-액티비티를 선택하기 화면
+* HTTP GET, `/api/roomList/{pk}`  
+(요청 예시> api/roomList/3)  
+  * response example :
+  ```
+  [
+      {
+          "id": 2,
+          "number_of_members": 2,
+          "room_name": "방탈출 ㄱㄱ",
+          "date": "2019-11-03",
+          "time": "19:00:00",
+          "place": "활동 장소",
+          "total_number_of_members": 3,
+          "sex_ratio": 2,
+          "is_Confirm": false,
+          "activity": 3
+      },
+        ...
+  ]
+  ```
 
+  
+#### 3. 메인-액티비티 선택 화면 
 * HTTP POST, `/api/roomEnter/`   
 with body `{ "room": room_pk_#, "user": user_pk_# }`   
   * response : No message
@@ -96,4 +89,5 @@ with body `{ "room": room_pk_#, "user": user_pk_# }`
         "is_Confirm": false,
         "activity": 2
     }
-    ```
+    ``` 
++ API 처리 결과의 구분(응답코드 세부화) 추가 예정

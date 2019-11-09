@@ -1,5 +1,5 @@
 # Veeto Server   
-신촌 대학생을 위한 친목도모 자만추 서비스 :heart_eyes: 
+신촌 대학생을 위한 친목도모 자만추 웹 서비스 :heart_eyes: 
 #### Veeto Client? [Click me](https://github.com/gywls517/veeto-cli)
 
 ## Intro
@@ -11,6 +11,7 @@
 ## 사용 스택
 * django 
 * PostgreSQL
+* 웹 호스팅: AWS EC2, RDS
 
 
 
