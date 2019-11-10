@@ -11,7 +11,7 @@ class Activity(models.Model):
 
 
 class Room(models.Model):
-    room_name = models.CharField(max_length=100, default="액티비티 같이 해요~!")  # 방 이름(소개) - 50자 이내
+    room_name = models.CharField(max_length=100, default="액티비티 같이 해요~!")  # 방 이름(소개) - 10자 이내
     #master 방장 항목 추가할 방법 생각해보아야
     members = models.ManyToManyField(SimpleUser, through='RoomUser', through_fields=('room','user'))  # simpleuser.room_set 또는 rooms.members
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
