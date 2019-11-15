@@ -21,11 +21,13 @@ PROJECT_NAME = envs['PROJECT_NAME']
 REMOTE_HOST_SSH = envs['REMOTE_HOST_SSH']
 REMOTE_HOST = envs['REMOTE_HOST']
 REMOTE_USER = envs['REMOTE_USER']
+KEY_FILE_PATH = envs['KEY_FILE_PATH']
 
 env.user = REMOTE_USER
 username = env.user
 env.hosts = [REMOTE_HOST_SSH, ]
-env.key_filename = ["~/.ssh/aws_ec2_heejoe0222.pem",]
+env.key_filename = [KEY_FILE_PATH,]
+keypath = env.key_filename[0]
 
 project_folder = '/home/{}/srv/{}'.format(env.user, REPO_NAME)
 virtualenv_folder = '/home/{}/.pyenv/versions/production'.format(env.user)
@@ -69,7 +71,7 @@ def _upload_secrets_file():
     secret_file_dir = os.path.join(local_project_folder, 'secrets.json')
     remote_project_setting_dir = '{}@{}:{}'.format(REMOTE_USER, REMOTE_HOST_SSH,
                                                    os.path.join(project_folder, PROJECT_NAME))
-    local('scp {} {}'.format(secret_file_dir, remote_project_setting_dir))
+    local('scp -i {} {} {}'.format(keypath, secret_file_dir, remote_project_setting_dir))
 
 def _update_settings():
     print(green('_update_settings'))
@@ -82,9 +84,9 @@ def _update_virtualenv():
 
 def _update_static_files():  # 수정해야
     print(green('_update_static_files'))
-    run('sudo chown -R ubuntu:ubuntu /srv/{}/.static_root').format(REPO_NAME)
+    run('sudo chown -R ubuntu:ubuntu /home/ubuntu/srv/{}/.static_root').format(REPO_NAME)
     run('cd {} && {}/bin/python3 manage.py collectstatic --noinput'.format(project_folder, virtualenv_folder))
-    run('sudo chown -R root:root /srv/{}/.static_root').format(REPO_NAME)
+    run('sudo chown -R root:root /home/ubuntu/srv/{}/.static_root').format(REPO_NAME)
 
 def _update_database():
     print(green('_update_database'))
@@ -117,7 +119,7 @@ def _restart_uwsgi():
 
 def _restart_nginx():
     print(green('_restart_nginx'))
-    sudo('sudo cp -f {}/conf/nginx/nginx.conf /etc/nginx/sites-available/veeto.conf'.format(project_folder))
+    sudo('sudo cp -f {}/conf/nginx/veeto.conf /etc/nginx/sites-available/veeto.conf'.format(project_folder))
     sudo('sudo ln -sf /etc/nginx/sites-available/veeto.conf /etc/nginx/sites-enabled/veeto.conf')
     sudo('sudo systemctl restart nginx')
 
@@ -130,7 +132,7 @@ def deploy(skip_migration=False):
         _upload_secrets_file()
         _update_settings()
         _update_virtualenv()
-        _update_static_files()
+        # _update_static_files()
         _update_database()
         _run_django_test()
         _grant_uwsgi()
