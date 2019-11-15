@@ -1,2 +1,4 @@
 .idea/
 conf/secrets.json
+deploy.json
+accounts/media/
