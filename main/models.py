@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import SimpleUser
+from accounts.models import User
 
 
 # 액티비티 (방탈출, 볼링, 보드게임)
@@ -21,8 +21,8 @@ class ActivityPlace(models.Model):
 
 class Room(models.Model):
     room_name = models.CharField(max_length=100, default="액티비티 같이 해요~!")  # 방 이름(소개) - 10자 이내
-    #master 방장 항목 추가할 방법 생각해보아야
-    members = models.ManyToManyField(SimpleUser, through='RoomUser', through_fields=('room','user'))  # simpleuser.room_set 또는 rooms.members
+    # master 방장 항목 추가할 방법 생각해보아야
+    members = models.ManyToManyField(User, through='RoomUser', through_fields=('room','user'))  # simpleuser.room_set 또는 rooms.members
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
     date = models.DateField()  # 활동 날짜
     time = models.TimeField()  # 활동 시간
@@ -42,7 +42,7 @@ class Room(models.Model):
 
 
 class RoomUser(models.Model): #방에 들어온 순서로 보여주려면 객체 생성되는 시간 추가 해야될지?
-    user = models.ForeignKey(SimpleUser, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     is_master = models.BooleanField(default=False)
 

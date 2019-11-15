@@ -1,10 +1,9 @@
 from rest_framework import generics, status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from datetime import date, timedelta
+from datetime import date
 
-from accounts.models import SimpleUser
+from accounts.models import User
 from main.models import Room, Activity, RoomUser
 from main.serializers import RoomSerializer, SimpleRoomSerializer, RoomUserSerializer
 
@@ -36,7 +35,7 @@ class SimpleRoomListByActivityView(generics.ListAPIView):
         return queryset
 
 # 참여하기 눌렀을 때 -> 해당 방 pk(+유저정보)와 함께 post 요청 -> RoomUser 관계 생성 + 방 참여한 결과 status 보내주는 api
-# 방 참여 시 고려해야될 점: 성비, 같은 날짜에 유저의 다른 방 참가 여부, 방의 총 인원 수, RoomUser 관계 이미 있진 않은지? -> 구현해야
+# 방 참여 시 고려해야될 점: 성비, 학교 인증, 같은 날짜에 유저의 다른 방 참가 여부, RoomUser 관계 이미 있진 않은지?,사용자의 콩 차감 in db -> 구현해야
 # HTTP POST, /api/roomEnter/ with body { "room": room_pk_#, "user": user_pk_# }
 class RoomEnterView(generics.CreateAPIView):
     queryset = Room.objects.all()
@@ -49,7 +48,7 @@ class RoomEnterView(generics.CreateAPIView):
         else:
             return Response(ru_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# 방 만들기 눌렀을 때 -> 만드는 방 정보 form+유저정보 post 요청 -> db에서 room & RoomUser 관계 생성 + 방 생성한 결과 status 보내주는 api
+# 방 만들기 눌렀을 때 -> 만드는 방 정보 form+유저정보 post 요청 -> 학교 인증 확인 후 db에서 room & RoomUser 관계 생성 + 방 생성한 결과 status 보내주는 api
 # HTTP POST, /api/roomCreate/ with body {form}
 class RoomCreateView(generics.CreateAPIView):
 
@@ -59,7 +58,7 @@ class RoomCreateView(generics.CreateAPIView):
         if r_serializer.is_valid():
             new_room = r_serializer.save()  # Room 생성
             user_pk = request.POST.get('user', None)
-            RoomUser(room= new_room, user=SimpleUser.objects.get(id=user_pk), is_master=True).save() # RoomUser관계 생성
+            RoomUser(room= new_room, user=User.objects.get(id=user_pk), is_master=True).save() # RoomUser관계 생성
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(r_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -73,7 +72,7 @@ class RoomDetailView(generics.RetrieveAPIView):
         queryset = Room.objects.all()
         user_pk = request.GET.get('user', None)
         room_pk = request.GET.get('room', None)
-        room_user_q = RoomUser.objects.filter(user=SimpleUser.objects.get(id=user_pk), room=Room.objects.get(id=room_pk))
+        room_user_q = RoomUser.objects.filter(user=User.objects.get(id=user_pk), room=Room.objects.get(id=room_pk))
         if user_pk is not None and room_pk is not None and room_user_q.count()!=0:
             queryset = queryset.get(pk=room_pk)
             return Response(RoomSerializer(queryset).data)  # 방장 누구인지를 같이 보내줘야되는지, 같이 보낸다면 어떻게 구현할지
