@@ -6,16 +6,17 @@
     [
         {
             "id": 4,
-            "number_of_members": 2,
-            "room_name": "볼링 고고우",
-            "date": "2019-11-05",
-            "time": "12:00:00",
-            "place": "이화볼링장",
-            "total_number_of_members": 3,
+            "number_of_members": 0,
+            "year": 2019,
+            "month": 11,
+            "day": 17,
+            "place": "보드스쿨",
+            "room_name": "보드게임 같이 해요",
+            "time": "15:00:00",
             "sex_ratio": 0,
             "is_Confirm": false,
-            "activity": 1
-        }
+            "activity": 2
+        },
         ...
     ]
    ```
@@ -25,20 +26,21 @@
   * response example :
   ```
   [
-      {
-          "id": 2,
-          "number_of_members": 2,
-          "room_name": "방탈출 ㄱㄱ",
-          "date": "2019-11-03",
-          "time": "19:00:00",
-          "place": "활동 장소",
-          "total_number_of_members": 3,
-          "sex_ratio": 2,
-          "is_Confirm": false,
-          "activity": 3
-      },
-        ...
-  ]
+          {
+              "id": 4,
+              "number_of_members": 0,
+              "year": 2019,
+              "month": 11,
+              "day": 17,
+              "place": "보드스쿨",
+              "room_name": "보드게임 같이 해요",
+              "time": "15:00:00",
+              "sex_ratio": 0,
+              "is_Confirm": false,
+              "activity": 2
+          },
+          ...
+      ]
   ```
 
   
