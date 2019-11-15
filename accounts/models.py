@@ -46,13 +46,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
 
     user_id = models.CharField(max_length=20, unique=True)
-    university = models.ForeignKey(University, on_delete=models.PROTECT)
+    university = models.ForeignKey(University, on_delete=models.PROTECT, null=True)  # 관리자만 null 가능
     school_email = models.EmailField()
 
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/uploads', default='profiles/jordy.jpg')
     self_pr = models.CharField(max_length=50, default="#이런사람") # 해시태그로 자기소개
     university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
-    beans = models.IntegerField()  # 서비스 가상화폐
+    beans = models.IntegerField(default=0)  # 서비스 가상화폐
 
 
     is_active = models.BooleanField(default=True)
