@@ -10,6 +10,15 @@ class Activity(models.Model):
         return self.name
 
 
+class ActivityPlace(models.Model):
+    name = models.CharField(max_length=30)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    info_link = models.URLField(verbose_name="활동장소 링크", max_length=250)
+
+    def __str__(self):
+        return self.name
+
+
 class Room(models.Model):
     room_name = models.CharField(max_length=100, default="액티비티 같이 해요~!")  # 방 이름(소개) - 10자 이내
     #master 방장 항목 추가할 방법 생각해보아야
@@ -17,7 +26,7 @@ class Room(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
     date = models.DateField()  # 활동 날짜
     time = models.TimeField()  # 활동 시간
-    place = models.CharField(max_length=100, default="활동 장소")  #활동 장소
+    place = models.ForeignKey(ActivityPlace, on_delete=models.PROTECT)  #활동 장소
     total_number_of_members = models.IntegerField()  # 방 총 인원
     sex_ratio = models.IntegerField(default=0)  # 성비 맞출지 여부 (0-무관, 1-성비맞춤, 2-같은성별만)
     is_Confirm = models.BooleanField(default=False)  # 방 확정여부

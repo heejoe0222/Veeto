@@ -22,14 +22,10 @@ REMOTE_HOST_SSH = envs['REMOTE_HOST_SSH']
 REMOTE_HOST = envs['REMOTE_HOST']
 REMOTE_USER = envs['REMOTE_USER']
 
-# STATIC_ROOT_NAME = 'static_deploy'
-# STATIC_URL_NAME = 'static'
-# MEDIA_ROOT = 'uploads'
-
 env.user = REMOTE_USER
 username = env.user
 env.hosts = [REMOTE_HOST_SSH, ]
-env.key_filename = [os.path.join(os.path.dirname(os.getcwd()),"aws_ec2_heejoe0222.pem") ]
+env.key_filename = ["~/.ssh/aws_ec2_heejoe0222.pem",]
 
 project_folder = '/home/{}/srv/{}'.format(env.user, REPO_NAME)
 virtualenv_folder = '/home/{}/.pyenv/versions/production'.format(env.user)
@@ -127,8 +123,8 @@ def _restart_nginx():
 
 ## fab 명령어로 실행하기
 def deploy(skip_migration=False):
-    _check_if_migration_needed(skip_migration)
-    _local_test()
+    #_check_if_migration_needed(skip_migration)
+    #_local_test()
     try:
         _get_latest_source()
         _upload_secrets_file()
