@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from datetime import date
 
 from accounts.models import User
-from main.models import Room, Activity, RoomUser
-from main.serializers import RoomSerializer, SimpleRoomSerializer, RoomUserSerializer
+from main.models import Room, Activity, ActivityPlace, RoomUser
+from main.serializers import RoomSerializer, SimpleRoomSerializer, RoomUserSerializer, ActivityPlaceSerializer
 
 # 날짜 get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
 # HTTP GET, /api/roomList/{year}/{month}/{day}
@@ -29,6 +29,18 @@ class SimpleRoomListByActivityView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = Room.objects.all()
+        activity_pk = self.kwargs.get('pk')
+        if activity_pk is not None:
+            queryset = queryset.filter(activity=Activity.objects.get(pk=int(activity_pk)))
+        return queryset
+
+# 액티비티종류(pk) get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
+# HTTP GET, /api/place/{pk}
+class ActivityPlaceView(generics.ListAPIView):
+    serializer_class = ActivityPlaceSerializer
+
+    def get_queryset(self):
+        queryset = ActivityPlace.objects.all()
         activity_pk = self.kwargs.get('pk')
         if activity_pk is not None:
             queryset = queryset.filter(activity=Activity.objects.get(pk=int(activity_pk)))

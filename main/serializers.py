@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Room, RoomUser
+from .models import Room, RoomUser, ActivityPlace
 from accounts.serializers import UserSerializer
 
 
@@ -8,6 +8,12 @@ class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Room
+
+
+class ActivityPlaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityPlace
+        field = ('name', 'info_link')
 
 
 class SimpleRoomSerializer(serializers.ModelSerializer):
