@@ -40,7 +40,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=20)
-    user_nickname = models.CharField(max_length=15)  # unique=True
+    user_nickname = models.CharField(max_length=15, null=True)  # unique=True
     date_of_birth = models.DateField(null=True)  # age  # 관리자만 null 가능
     GENDER_CHOICES = (
         ('F', 'Female'),

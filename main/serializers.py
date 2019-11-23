@@ -1,19 +1,19 @@
 from rest_framework import serializers
 from .models import Room, RoomUser, ActivityPlace
-from accounts.serializers import UserSerializer
-
-
-class RoomSerializer(serializers.ModelSerializer):
-    members = UserSerializer(read_only=True, many=True)
-    class Meta:
-        fields = '__all__'
-        model = Room
+from accounts.serializers import UserInfoSerializer
 
 
 class ActivityPlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityPlace
         exclude = ('activity',)
+
+
+class RoomSerializer(serializers.ModelSerializer):
+    members = UserInfoSerializer(read_only=True, many=True)
+    class Meta:
+        fields = '__all__'
+        model = Room
 
 
 class SimpleRoomSerializer(serializers.ModelSerializer):
