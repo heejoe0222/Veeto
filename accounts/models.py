@@ -1,16 +1,17 @@
 from django.db import models
 
-
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 from datetime import date
+
 
 class University(models.Model):
     school_name = models.CharField(max_length=15)
 
     def __str__(self):
         return self.school_name
+
 
 class UserManager(BaseUserManager):
     use_in_migrations = True

@@ -13,7 +13,7 @@ class RoomSerializer(serializers.ModelSerializer):
 class ActivityPlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityPlace
-        field = ('name', 'info_link')
+        exclude = ('activity',)
 
 
 class SimpleRoomSerializer(serializers.ModelSerializer):
