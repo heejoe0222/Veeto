@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import User
-from main.serializers import RoomSerializer
+# from main.serializers import RoomSerializer  #여기서 오류남
 
 
 # 방 내부의 유저 정보
@@ -9,18 +9,6 @@ class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ['user_nickname', 'age', 'university', 'self_pr', 'gender', 'profile_image',]
         model = User
-
-
-# 왼쪽 프로필 창에서의 유저 정보
-class UserDetailSerializer(serializers.ModelSerializer):
-    rooms = serializers.SerializerMethodField()
-    age = serializers.ReadOnlyField(source='get_age')
-    class Meta:
-        fields = ['user_nickname', 'age', 'university', 'self_pr', 'gender', 'profile_image',]
-        model = User
-
-    def get_rooms(self, obj):
-        return RoomSerializer(obj.room_set.all())
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -37,3 +25,15 @@ class CreateUserSerializer(serializers.ModelSerializer):
                 **validated_data
             )
             return user
+
+
+# 왼쪽 프로필 창에서의 내(로그인중인 유저) 상세 정보
+class UserDetailSerializer(serializers.ModelSerializer):
+    # rooms = serializers.SerializerMethodField()
+    age = serializers.ReadOnlyField(source='get_age')
+    class Meta:
+        fields = ['user_nickname', 'age', 'university', 'self_pr', 'profile_image', 'university_auth']
+        model = User
+
+    # def get_rooms(self, obj):
+    #     return RoomSerializer(obj.room_set.all(), many=True) 유저가 참여하는 방 목록

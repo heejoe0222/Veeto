@@ -20,7 +20,7 @@ class ActivityPlace(models.Model):
 
 
 class Room(models.Model):
-    room_name = models.CharField(max_length=12, default="액티비티 같이 해요~!")  # 방 이름(소개) - 10자 이내
+    room_name = models.CharField(max_length=12, default="액티비티 같이 해요~!")  # 방 이름(소개) - 12자 이내
     members = models.ManyToManyField(User, through='RoomUser', through_fields=('room','user'))  # simpleuser.room_set 또는 rooms.members
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
     date = models.DateField()  # 활동 날짜
