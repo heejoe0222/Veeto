@@ -10,7 +10,7 @@ from main.serializers import (RoomSerializer, SimpleRoomSerializer, RoomUserSeri
 # 날짜 get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
 # HTTP GET, /api/roomList/{year}/{month}/{day}
 class SimpleRoomListByDateView(generics.ListAPIView):
-    #permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = SimpleRoomSerializer
 
     def get_queryset(self):
@@ -26,7 +26,7 @@ class SimpleRoomListByDateView(generics.ListAPIView):
 # 액티비티종류(pk) get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
 # HTTP GET, /api/roomList/{pk}
 class SimpleRoomListByActivityView(generics.ListAPIView):
-    #permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = SimpleRoomSerializer
 
     def get_queryset(self):
