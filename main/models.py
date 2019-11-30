@@ -21,7 +21,7 @@ class RoomCandidate(models.Model):
 
 class Room(models.Model):
     members = models.ManyToManyField(TempUser, through='RoomUser', through_fields=('room','user'))  # TempUser.room_set 또는 rooms.members
-    RoomCandidate = models.ForeignKey(RoomCandidate, on_delete=models.PROTECT)
+    roomCandidate = models.ForeignKey(RoomCandidate, on_delete=models.PROTECT)
 
     def __str__(self):  # 액티비티+활동날짜시간+총인원 표시
         return self.id+"| "+self.activity.name+"| "+str(self.date)+" "+str(self.time)

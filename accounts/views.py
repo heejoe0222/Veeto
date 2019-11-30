@@ -1,13 +1,18 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
-from rest_framework.settings import api_settings
+#from rest_framework.settings import api_settings
 
-from rest_framework.exceptions import PermissionDenied, APIException
-from django.core.exceptions import ObjectDoesNotExist
+#from rest_framework.exceptions import PermissionDenied, APIException
+#from django.core.exceptions import ObjectDoesNotExist
 
-from accounts.models import User
-from accounts.serializers import UserInfoSerializer, CreateUserSerializer
+#from accounts.models import User
+from accounts.serializers import UserInfoSerializer, FormSerializer
 
+# HTTP POST, /accounts/userForm
+class RegisterForm(generics.CreateAPIView):
+    serializer_class = FormSerializer
+
+'''
 # 아이디 중복체크 함수
 # HTTP GET, /accounts/checkDup/?type={nick or id or email}&word={해당 닉네임 또는 id 또는 email}
 def checkDuplicate(request):
@@ -70,4 +75,5 @@ class RegisterView(generics.GenericAPIView):
 # 프로필 사진 변경
 # 해시태그 변경
 
+'''
 

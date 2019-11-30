@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Room, RoomUser, ActivityPlace
+from .models import Room, RoomUser, RoomCandidate
 from accounts.serializers import UserInfoSerializer
+
 
 
 class ActivityPlaceSerializer(serializers.ModelSerializer):
@@ -11,17 +12,28 @@ class ActivityPlaceSerializer(serializers.ModelSerializer):
 
 class RoomSerializer(serializers.ModelSerializer):
     members = UserInfoSerializer(read_only=True, many=True)
+    date = serializers.SerializerMethodField()
+    time = serializers.SerializerMethodField()
+    activity = serializers.SerializerMethodField()
+
     class Meta:
-        fields = '__all__'
         model = Room
 
+    def get_date(self,obj):
+        return obj.roomCandidate.date
 
+    def get_time(self,obj):
+        return obj.roomCandidate.time
+
+    def get_activity(self,obj):
+        return obj.roomCandidate.activity
+
+
+'''
 class SimpleRoomSerializer(serializers.ModelSerializer):
-    number_of_members = serializers.ReadOnlyField(source='get_number_of_members')
     year = serializers.SerializerMethodField()
     month = serializers.SerializerMethodField()
     day = serializers.SerializerMethodField()
-    place = serializers.SerializerMethodField()
 
     class Meta:
         model = Room
@@ -40,11 +52,17 @@ class SimpleRoomSerializer(serializers.ModelSerializer):
         return obj.place.name
 
 
+class ActivityPlaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityPlace
+        exclude = ('activity',)
+
+
 class RoomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomUser
         fields = '__all__'
-
+'''
 
 
 

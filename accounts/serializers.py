@@ -1,16 +1,45 @@
 from rest_framework import serializers
-from .models import User
-# from main.serializers import RoomSerializer  #여기서 오류남
+from .models import TempUser, registerForm
 
 
 # 방 내부의 유저 정보
 class UserInfoSerializer(serializers.ModelSerializer):
-    age = serializers.ReadOnlyField(source='get_age')
+    gender = serializers.SerializerMethodField()
+    university = serializers.SerializerMethodField()
     class Meta:
-        fields = ['user_nickname', 'age', 'university', 'self_pr', 'gender', 'profile_image',]
-        model = User
+        fields = ['user_nickname', 'age']
+        model = TempUser
+
+    def get_gender(self,obj):
+        if obj.gender == 'F':
+            return '여'
+        elif obj.gender == 'M':
+            return '남'
+
+    def get_university(self,obj):
+        from .models import University
+        if obj.university == University.objects.get(pk=1):
+            return "서강대학교"
+        elif obj.university == University.objects.get(pk=2):
+            return "연세대학교"
+        elif obj.university == University.objects.get(pk=3):
+            return "이화여자대학교"
+        elif obj.university == University.objects.get(pk=4):
+            return "홍익대학교"
 
 
+# 사용자로부터 신청폼 받을 때 사용
+class FormSerializer(serializers.ModelSerializer):
+    date = serializers.DateField()
+    time = serializers.TimeField()
+    activity = serializers.IntegerField()
+
+    class Meta:
+        model = registerForm
+        exclude = ('university_auth', 'desired_room')
+
+
+'''
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -37,3 +66,4 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     # def get_rooms(self, obj):
     #     return RoomSerializer(obj.room_set.all(), many=True) 유저가 참여하는 방 목록
+'''

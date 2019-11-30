@@ -3,10 +3,13 @@ from rest_framework.response import Response
 
 from datetime import date
 
-from accounts.models import User
-from main.models import Room, Activity, ActivityPlace, RoomUser
-from main.serializers import (RoomSerializer, SimpleRoomSerializer, RoomUserSerializer, ActivityPlaceSerializer)
+from accounts.models import TempUser
+from main.models import Room, RoomUser, Activity, RoomCandidate
+from main.serializers import RoomSerializer
 
+
+
+'''
 # 날짜 get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
 # HTTP GET, /api/roomList/{year}/{month}/{day}
 class SimpleRoomListByDateView(generics.ListAPIView):
@@ -101,7 +104,6 @@ class RoomDetailView(generics.RetrieveAPIView):
 
 
 # 미리보기 눌렀을 때 -> 해당 방 pk(+유저정보)와 함께 get 요청 받음 -> 사용자의 콩 차감 in db + 해당 방 멤버들 조회 후 UserSerializer 전송하는 api
-
-
+'''
 
 
