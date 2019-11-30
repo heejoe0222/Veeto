@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os, json, datetime
+import os, json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # conf
 ROOT_DIR = os.path.dirname(BASE_DIR)  # root
@@ -115,7 +115,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(ROOT_DIR,'.static_root')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(ROOT_DIR, 'accounts/media')
+MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
 
 '''
 # set up API default permissions and jwt authentication

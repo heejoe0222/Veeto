@@ -5,12 +5,37 @@ from rest_framework.response import Response
 #from rest_framework.exceptions import PermissionDenied, APIException
 #from django.core.exceptions import ObjectDoesNotExist
 
-#from accounts.models import User
-from accounts.serializers import UserInfoSerializer, FormSerializer
+from accounts.models import registerForm, University
+from main.models import RoomCandidate
+from accounts.serializers import FormReadSerializer
 
 # HTTP POST, /accounts/userForm
 class RegisterForm(generics.CreateAPIView):
-    serializer_class = FormSerializer
+
+
+    def post(self, request, *args, **kwargs):
+        r_serializer = FormReadSerializer(data=request.data)
+
+        if r_serializer.is_valid():
+            desired_room = RoomCandidate.objects.get(
+                activity=r_serializer.data['activity'],
+                date = r_serializer.data['date'],
+                time = r_serializer.data['time']
+            )
+
+            content = r_serializer.data
+            del content['date']
+            del content['time']
+            del content['activity']
+            content['university'] = University.objects.get(pk=content['university'])
+
+            registerForm(desired_room=desired_room, **content).save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        else:
+            return Response(r_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 '''
 # 아이디 중복체크 함수
