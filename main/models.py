@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import User
+from accounts.models import TempUser
 
 
 # 액티비티 (방탈출, 볼링, 보드게임)
@@ -10,6 +10,28 @@ class Activity(models.Model):
         return self.name
 
 
+class RoomCandidate(models.Model):
+    activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
+    date = models.DateField()  # 활동 날짜
+    time = models.TimeField()  # 활동 시간
+
+    def __str__(self):  # 액티비티+활동날짜시간+총인원 표시
+        return self.activity.__str__()+"| "+str(self.date)+" "+str(self.time)
+
+
+class Room(models.Model):
+    members = models.ManyToManyField(TempUser, through='RoomUser', through_fields=('room','user'))  # TempUser.room_set 또는 rooms.members
+    RoomCandidate = models.ForeignKey(RoomCandidate, on_delete=models.PROTECT)
+
+    def __str__(self):  # 액티비티+활동날짜시간+총인원 표시
+        return self.id+"| "+self.activity.name+"| "+str(self.date)+" "+str(self.time)
+
+
+class RoomUser(models.Model):
+    user = models.ForeignKey(TempUser, on_delete=models.PROTECT)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+'''
 class ActivityPlace(models.Model):
     name = models.CharField(max_length=30)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
@@ -40,13 +62,8 @@ class Room(models.Model):
         ordering = ['date', 'time']
 
 
-class RoomUser(models.Model): #방에 들어온 순서로 보여주려면 객체 생성되는 시간 추가 해야될지?
+class RoomUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     is_master = models.BooleanField(default=False)
-
-    def __str__(self):  # 방 멤버+방 표시
-        if self.is_master == True:
-            return self.user.__str__()+"(m) in "+self.room.__str__()
-        else:
-            return self.user.__str__()+" in "+self.room.__str__()
+'''

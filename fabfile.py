@@ -40,7 +40,7 @@ def _check_if_migration_needed(skip_migrations=False):
     if skip_migrations:
         return
 
-    result = local('./manage.py makemigrations --dry-run', capture=True)
+    result = local('python ./manage.py makemigrations --dry-run', capture=True)
 
     if result.stdout != 'No changes detected' and not confirm(
             red("FAIL: Some model change found. You need to run makemigrations. \nOr just continue anyway?")):

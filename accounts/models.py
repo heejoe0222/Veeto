@@ -1,9 +1,7 @@
 from django.db import models
-
-from django.contrib.auth.models import PermissionsMixin
+#from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-
-from datetime import date
+from main.models import RoomCandidate
 
 
 class University(models.Model):
@@ -13,6 +11,38 @@ class University(models.Model):
         return self.school_name
 
 
+class registerForm(models.Model):
+    user_name = models.CharField(max_length=10)
+    user_nickname = models.CharField(max_length=15) #unique=True
+    age = models.IntegerField()
+    university = models.ForeignKey(University, on_delete=models.PROTECT)
+    GENDER_CHOICES = (
+        ('F', 'Female'),
+        ('M', 'Male'),
+    )
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
+    phone_num = models.CharField(max_length=11) #unique=True
+    studentCard_image = models.ImageField(upload_to='auth')
+    university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
+
+    desired_room = models.ForeignKey(RoomCandidate, on_delete=models.PROTECT)
+    desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 0, 1:1 1, 무관 2
+
+
+class TempUser(models.Model):
+    user_name = models.CharField(max_length=10)
+    user_nickname = models.CharField(max_length=15) #unique=True
+    age = models.IntegerField()
+    university = models.ForeignKey(University, on_delete=models.PROTECT)
+    GENDER_CHOICES = (
+        ('F', 'Female'),
+        ('M', 'Male'),
+    )
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
+    phone_num = models.CharField(max_length=11) #unique=True
+
+
+'''
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
@@ -35,7 +65,6 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff',True)
         return self._create_user(user_id, password, **extra_fields)
-
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -77,4 +106,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_age(self):
         today = date.today()
         return today.year-self.date_of_birth.year+1
-
+'''

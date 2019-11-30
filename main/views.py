@@ -10,7 +10,7 @@ from main.serializers import (RoomSerializer, SimpleRoomSerializer, RoomUserSeri
 # 날짜 get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
 # HTTP GET, /api/roomList/{year}/{month}/{day}
 class SimpleRoomListByDateView(generics.ListAPIView):
-    permission_classes = []
+    #permission_classes = []
     # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = SimpleRoomSerializer
 
@@ -28,7 +28,7 @@ class SimpleRoomListByDateView(generics.ListAPIView):
 # HTTP GET, /api/roomList/{pk}
 class SimpleRoomListByActivityView(generics.ListAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
-    permission_classes = []
+    #permission_classes = []
     serializer_class = SimpleRoomSerializer
 
     def get_queryset(self):
@@ -41,7 +41,7 @@ class SimpleRoomListByActivityView(generics.ListAPIView):
 # 액티비티종류(pk) get 요청 받았을 때 -> 해당되는 방들의 SimpleRoomSerializer 전송하는 api
 # HTTP GET, /api/place/{pk}
 class ActivityPlaceView(generics.ListAPIView):
-    permission_classes = []
+    #permission_classes = []
     serializer_class = ActivityPlaceSerializer
 
     def get_queryset(self):
@@ -55,7 +55,7 @@ class ActivityPlaceView(generics.ListAPIView):
 # 방 참여 시 고려해야될 점: 성비, 학교 인증, 같은 날짜에 유저의 다른 방 참가 여부, RoomUser 관계 이미 있진 않은지?,사용자의 콩 차감 in db -> 구현해야
 # HTTP POST, /api/roomEnter/ with body { "room": room_pk_#, "user": user_pk_# }
 class RoomEnterView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    #permission_classes = (permissions.IsAuthenticated,)
     queryset = Room.objects.all()
 
     def post(self, request, *args, **kwargs):
@@ -69,7 +69,7 @@ class RoomEnterView(generics.CreateAPIView):
 # 방 만들기 눌렀을 때 -> 만드는 방 정보 form+유저정보 post 요청 -> 학교 인증 확인 후 db에서 room & RoomUser 관계 생성 + 방 생성한 결과 status 보내주는 api
 # HTTP POST, /api/roomCreate/ with body {form}
 class RoomCreateView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    #permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         r_serializer = RoomSerializer(data=request.data)
@@ -86,7 +86,7 @@ class RoomCreateView(generics.CreateAPIView):
 # get 요청이 보안 상 괜찮을지..?
 # HTTP GET, /api/roomDetail/?user=user_pk_#&room=room_pk_#
 class RoomDetailView(generics.RetrieveAPIView):
-    permission_classes = (permissions.IsAuthenticated,)  # 방에 참가한 사람 또는 미리보기 한 사람만 접근할 수 있어야
+    #permission_classes = (permissions.IsAuthenticated,)  # 방에 참가한 사람 또는 미리보기 한 사람만 접근할 수 있어야
 
     def get(self, request, *args, **kwargs):
         queryset = Room.objects.all()

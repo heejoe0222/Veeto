@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'accounts.User'
+#AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
 INSTALLED_APPS = [
@@ -117,6 +117,7 @@ STATIC_ROOT = os.path.join(ROOT_DIR,'.static_root')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'accounts/media')
 
+'''
 # set up API default permissions and jwt authentication
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -136,3 +137,4 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'token',
     'JWT_RESPONSE_PAYLOAD_HANDLER' : 'accounts.utils.custom_jwt_response_handler',
 }
+'''
