@@ -12,7 +12,6 @@ from accounts.serializers import FormReadSerializer
 # HTTP POST, /accounts/userForm
 class RegisterForm(generics.CreateAPIView):
 
-
     def post(self, request, *args, **kwargs):
         r_serializer = FormReadSerializer(data=request.data)
 
