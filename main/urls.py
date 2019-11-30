@@ -4,5 +4,5 @@ from . import views
 app_name = 'main'  # namespace 추가
 
 urlpatterns = [
-    path('roomDetail/', views.RoomDetailView.as_view()),
+    path('roomDetail/<int:room>', views.RoomDetailView.as_view()),
 ]
