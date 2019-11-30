@@ -18,6 +18,7 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
+        exclude = ('roomCandidate',)
 
     def get_date(self,obj):
         return obj.roomCandidate.date
@@ -26,7 +27,7 @@ class RoomSerializer(serializers.ModelSerializer):
         return obj.roomCandidate.time
 
     def get_activity(self,obj):
-        return obj.roomCandidate.activity
+        return obj.roomCandidate.activity.id
 
 
 '''

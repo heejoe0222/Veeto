@@ -7,7 +7,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
     gender = serializers.SerializerMethodField()
     university = serializers.SerializerMethodField()
     class Meta:
-        fields = ['user_nickname', 'age']
+        fields = ['user_nickname', 'age', 'gender', 'university',]
         model = TempUser
 
     def get_gender(self,obj):
