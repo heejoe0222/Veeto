@@ -33,6 +33,7 @@ class FormReadSerializer(serializers.ModelSerializer):
     date = serializers.DateField()
     time = serializers.TimeField()
     activity = serializers.IntegerField()
+    #studentCard_img = serializers.ImageField(use_url=True)
 
     class Meta:
         model = registerForm

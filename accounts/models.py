@@ -21,7 +21,7 @@ class registerForm(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
     phone_num = models.CharField(max_length=11) #unique=True
-    studentCard_image = models.ImageField(upload_to='auth', null=False)
+    studentCard_image = models.ImageField(upload_to='auth/', null=False)
     university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
 
     desired_room = models.ForeignKey('main.RoomCandidate', on_delete=models.PROTECT) #원하는 방 종류
