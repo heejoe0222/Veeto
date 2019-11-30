@@ -12,7 +12,7 @@ class University(models.Model):
 
 class registerForm(models.Model):
     user_name = models.CharField(max_length=10)
-    user_nickname = models.CharField(max_length=15) #unique=True
+    user_nickname = models.CharField(max_length=5) #unique=True
     age = models.IntegerField()
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     GENDER_CHOICES = (
@@ -30,7 +30,7 @@ class registerForm(models.Model):
 
 class TempUser(models.Model):
     user_name = models.CharField(max_length=10)
-    user_nickname = models.CharField(max_length=15) #unique=True
+    user_nickname = models.CharField(max_length=5) #unique=True
     age = models.IntegerField()
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     GENDER_CHOICES = (
