@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Room, RoomUser, RoomCandidate
+from .models import Room
 from accounts.serializers import UserInfoSerializer
 
 
