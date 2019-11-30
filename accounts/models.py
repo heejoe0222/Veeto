@@ -1,7 +1,6 @@
 from django.db import models
 #from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from main.models import RoomCandidate
+#from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 
 class University(models.Model):
@@ -25,7 +24,7 @@ class registerForm(models.Model):
     studentCard_image = models.ImageField(upload_to='auth')
     university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
 
-    desired_room = models.ForeignKey(RoomCandidate, on_delete=models.PROTECT)
+    desired_room = models.ForeignKey("main.RoomCandidate", on_delete=models.PROTECT) # model 객체가 아닌 model의 이름을 문자열로 넣어줌
     desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 0, 1:1 1, 무관 2
 
 
