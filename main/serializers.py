@@ -8,6 +8,7 @@ class RoomSerializer(serializers.ModelSerializer):
     date = serializers.SerializerMethodField()
     time = serializers.SerializerMethodField()
     activity = serializers.SerializerMethodField()
+
     class Meta:
         model = Room
         exclude = ('roomCandidate',)
