@@ -1,38 +1,40 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
-#from rest_framework.settings import api_settings
+from rest_framework.parsers import MultiPartParser, FormParser
 
-#from rest_framework.exceptions import PermissionDenied, APIException
-#from django.core.exceptions import ObjectDoesNotExist
-
-from accounts.models import registerForm, University
+from accounts.models import TempUser, University
 from main.models import RoomCandidate
-from accounts.serializers import FormReadSerializer
+from accounts.serializers import FormSerializer
 
 # HTTP POST, /accounts/userForm
 class RegisterForm(generics.CreateAPIView):
 
-    def post(self, request, *args, **kwargs):
-        r_serializer = FormReadSerializer(data=request.data)
 
-        if r_serializer.is_valid():
+    def post(self, request, *args, **kwargs):
+        serializer = FormSerializer(data=request.data)
+
+        if serializer.is_valid():
+            form = serializer.save()
+
             desired_room = RoomCandidate.objects.get(
-                activity=r_serializer.data['activity'],
-                date = r_serializer.data['date'],
-                time = r_serializer.data['time']
+                activity=serializer.data['activity'],
+                date = serializer.data['date'],
+                time = serializer.data['time']
             )
 
-            content = r_serializer.data
-            del content['date']
-            del content['time']
-            del content['activity']
-            content['university'] = University.objects.get(pk=content['university'])
-
-            registerForm(desired_room=desired_room, **content).save()
+            TempUser(
+                user_name = form.user_name,
+                user_nickname = form.user_nickname,
+                age = form.age,
+                university = form.university,
+                gender = form.gender,
+                phone_num = form.phone_num,
+                desired_room = desired_room,
+                desired_gender_ratio = form.desired_gender_ratio
+            ).save()
             return Response(status=status.HTTP_201_CREATED)
-
         else:
-            return Response(r_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

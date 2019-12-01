@@ -6,7 +6,7 @@ DEBUG =True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'veeto_db',
+        'NAME': 'veeto',
         'USER': 'postgres',
         'PASSWORD': 'veeto5',
         'PORT': 5432,

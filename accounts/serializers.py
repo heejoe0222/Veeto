@@ -29,16 +29,10 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
 
 # 사용자로부터 신청폼 받을 때 사용
-class FormReadSerializer(serializers.ModelSerializer):
-    date = serializers.DateField()
-    time = serializers.TimeField()
-    activity = serializers.IntegerField()
-    #studentCard_img = serializers.ImageField(use_url=True)
-
+class FormSerializer(serializers.ModelSerializer):
     class Meta:
         model = registerForm
-        exclude = ('university_auth', 'desired_room')
-
+        fields = '__all__'
 
 
 '''

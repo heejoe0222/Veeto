@@ -12,6 +12,7 @@ class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         exclude = ('roomCandidate',)
+
     def get_date(self,obj):
         return obj.roomCandidate.date
     def get_time(self,obj):

@@ -22,9 +22,11 @@ class registerForm(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
     phone_num = models.CharField(max_length=11) #unique=True
     studentCard_image = models.ImageField(upload_to='auth/', null=False)
-    university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
 
-    desired_room = models.ForeignKey('main.RoomCandidate', on_delete=models.PROTECT) #원하는 방 종류
+    date = models.DateField()
+    time = models.TimeField()
+    activity = models.ForeignKey("main.Activity", on_delete=models.PROTECT)
+
     desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 1, 1:1 2, 무관 3
 
 
@@ -39,6 +41,10 @@ class TempUser(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
     phone_num = models.CharField(max_length=11) #unique=True
+
+    desired_room = models.ForeignKey('main.RoomCandidate', on_delete=models.PROTECT) #원하는 방 종류
+    desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 1, 1:1 2, 무관 3
+    university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
 
 
 '''

@@ -1,9 +1,6 @@
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 
-from datetime import date
-
-from accounts.models import TempUser
 from main.models import Room
 from main.serializers import RoomSerializer
 
