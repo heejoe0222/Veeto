@@ -29,6 +29,9 @@ class registerForm(models.Model):
 
     desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 1, 1:1 2, 무관 3
 
+    def __str__(self):
+        return self.user_name+" ("+self.university.school_name+")"
+
 
 class TempUser(models.Model):
     user_name = models.CharField(max_length=10)
@@ -45,6 +48,9 @@ class TempUser(models.Model):
     desired_room = models.ForeignKey('main.RoomCandidate', on_delete=models.PROTECT) #원하는 방 종류
     desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 1, 1:1 2, 무관 3
     university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
+
+    def __str__(self):
+        return self.user_name+" ("+self.university.school_name+")"
 
 
 '''
