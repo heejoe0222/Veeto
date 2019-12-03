@@ -21,7 +21,7 @@ class registerForm(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
     phone_num = models.CharField(max_length=11) #unique=True
-    studentCard_image = models.ImageField(upload_to='auth/', null=False)
+    studentCard_image = models.ImageField(upload_to='auth/', null=True)
 
     date = models.DateField()
     time = models.TimeField()

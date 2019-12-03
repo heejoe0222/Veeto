@@ -32,7 +32,8 @@ class UserInfoSerializer(serializers.ModelSerializer):
 class FormSerializer(serializers.ModelSerializer):
     class Meta:
         model = registerForm
-        fields = '__all__'
+        #fields = '__all__'
+        exclude=('studentCard_image',)
 
 
 '''
