@@ -23,7 +23,7 @@ class Room(models.Model):
     members = models.ManyToManyField(TempUser, through='RoomUser', through_fields=('room','user'))  # TempUser.room_set 또는 rooms.members
     roomCandidate = models.ForeignKey(RoomCandidate, on_delete=models.PROTECT)
 
-    def __str__(self): 
+    def __str__(self):
         return self.id+"| "+self.activity.name+"| "+str(self.date)+" "+str(self.time)
 
 
