@@ -25,11 +25,11 @@ class AuthView(generics.CreateAPIView):
 class RegisterForm(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
-        try:
-            serializer = FormSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-        except Exception:
-            raise Exception(request)
+        # try:
+        serializer = FormSerializer(data=request.data)
+        #     serializer.is_valid(raise_exception=True)
+        # except Exception:
+        #     raise Exception(request)
 
         if serializer.is_valid():
             form = serializer.save()
