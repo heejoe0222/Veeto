@@ -15,7 +15,7 @@ class StudentCardImage(models.Model):
     image = models.ImageField(upload_to='auth/%Y/%m/%d', null=False)
 
     def __str__(self):
-        return self.image
+        return self.image.name
 
 
 class registerForm(models.Model):

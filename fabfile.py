@@ -134,7 +134,7 @@ def deploy(skip_migration=False):
         _update_virtualenv()
         # _update_static_files()
         _update_database()
-        _run_django_test()
+        #_run_django_test()
         _grant_uwsgi()
         _restart_uwsgi()
         _restart_nginx()
