@@ -1,14 +1,20 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
 
-from accounts.models import TempUser, University
+from accounts.models import TempUser, registerForm, StudentCardImage
 from main.models import RoomCandidate
-from accounts.serializers import FormSerializer
+from accounts.serializers import FormSerializer, ImageSerializer
 
-# HTTP POST, /accounts/userForm
+
+# HTTP POST, /accounts/auth/
+class AuthView(generics.CreateAPIView):
+    queryset = StudentCardImage.objects.all()
+    serializer_class = ImageSerializer
+
+
+# HTTP POST, /accounts/userForm/
+# 이미지 주소나 pk 같이 받아서 폼 생성
 class RegisterForm(generics.CreateAPIView):
-
 
     def post(self, request, *args, **kwargs):
         serializer = FormSerializer(data=request.data)
@@ -35,6 +41,20 @@ class RegisterForm(generics.CreateAPIView):
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+'''
+class UpdateAuthImage(generics.UpdateAPIView):
+    serializer_class = FormSerializer
+    queryset = registerForm.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(data={"msg":"이미지 업데이트 완료"}, status=status.HTTP_200_OK)
+'''
 
 
 

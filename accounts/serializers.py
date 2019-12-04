@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TempUser, registerForm
+from .models import TempUser, registerForm, StudentCardImage
 
 
 # 방 내부의 유저 정보
@@ -26,6 +26,12 @@ class UserInfoSerializer(serializers.ModelSerializer):
             return "이화여자대학교"
         elif obj.university == University.objects.get(pk=4):
             return "홍익대학교"
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentCardImage
+        fields = '__all__'
 
 
 # 사용자로부터 신청폼 받을 때 사용

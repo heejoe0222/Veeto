@@ -1,4 +1,5 @@
 from django.db import models
+
 #from django.contrib.auth.models import PermissionsMixin
 #from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
@@ -8,6 +9,13 @@ class University(models.Model):
 
     def __str__(self):
         return self.school_name
+
+
+class StudentCardImage(models.Model):
+    image = models.ImageField(upload_to='auth/%Y/%m/%d', null=False)
+
+    def __str__(self):
+        return self.image
 
 
 class registerForm(models.Model):
@@ -21,13 +29,14 @@ class registerForm(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
     phone_num = models.CharField(max_length=11) #unique=True
-    studentCard_image = models.ImageField(upload_to='auth/', null=False)
+    studentCard_image = models.ForeignKey(StudentCardImage, on_delete=models.PROTECT)
 
     date = models.DateField()
     time = models.TimeField()
     activity = models.ForeignKey("main.Activity", on_delete=models.PROTECT)
 
     desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 1, 1:1 2, 무관 3
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.user_name+" ("+self.university.school_name+")"
