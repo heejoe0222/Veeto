@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 
+from rest_framework.parsers import MultiPartParser, FormParser
 from accounts.models import TempUser, registerForm, StudentCardImage
 from main.models import RoomCandidate
 from accounts.serializers import FormSerializer, ImageSerializer
@@ -8,6 +9,8 @@ from accounts.serializers import FormSerializer, ImageSerializer
 
 # HTTP POST, /accounts/auth/
 class AuthView(generics.CreateAPIView):
+    parser_classes = (MultiPartParser, FormParser)
+
     queryset = StudentCardImage.objects.all()
     serializer_class = ImageSerializer
 
