@@ -10,13 +10,18 @@ from accounts.serializers import FormSerializer, ImageSerializer
 # HTTP POST, /accounts/auth/
 class AuthView(generics.CreateAPIView):
     parser_classes = (MultiPartParser, FormParser)
-
     queryset = StudentCardImage.objects.all()
     serializer_class = ImageSerializer
 
+    def post(self, request, *args, **kwargs):
+        try:
+            return self.create(request, *args, **kwargs)
+        except Exception as e:
+            raise Exception(request)
+
 
 # HTTP POST, /accounts/userForm/
-# 이미지 주소나 pk 같이 받아서 폼 생성
+# 이미지 주소나 pk 같이 받아서 폼 생성u
 class RegisterForm(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
