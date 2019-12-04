@@ -1,7 +1,7 @@
 from .base import *
 
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = secrets['ALLOWED_HOST']
 

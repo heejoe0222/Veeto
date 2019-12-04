@@ -3,6 +3,10 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from accounts.models import University
 
+from io import StringIO
+from PIL import Image
+from django.core.files.base import File
+
 # Create your tests here.
 
 class TestFileUpload(APITestCase):
@@ -12,6 +16,14 @@ class TestFileUpload(APITestCase):
         University.objects.create(school_name="이화여대");
         pass
 
+    @staticmethod
+    def get_image_file(name='test.png', ext='png', size=(50, 50), color=(256, 0, 0)):
+        file_obj = StringIO()
+        image = Image.new("RGBA", size=size, color=color)
+        image.save(file_obj, ext)
+        file_obj.seek(0)
+        return File(file_obj, name=name)
+    '''
     def test_file_is_accepted(self):
         url = reverse('accounts:register-user-form')
         image = open('C:\\Users\\heejo\\Pictures\\universe.jpg','rb')
@@ -31,6 +43,12 @@ class TestFileUpload(APITestCase):
 
         response = self.client.post( url, data, format='multipart')
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+    '''
 
     def test_image_only_is_accepted(self):
-        url = reverse('accounts')
+        url = reverse('accounts:user-auth')
+        image = self.get_image_file()
+        data = {'image':image}
+
+        response = self.client.post( url, data, format='multipart')
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
