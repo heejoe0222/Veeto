@@ -27,6 +27,7 @@ class RegisterForm(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         try:
             serializer = FormSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
         except Exception:
             raise Exception(request)
 
