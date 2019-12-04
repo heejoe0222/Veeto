@@ -13,11 +13,11 @@ class AuthView(generics.CreateAPIView):
     queryset = StudentCardImage.objects.all()
     serializer_class = ImageSerializer
 
-    def post(self, request, *args, **kwargs):
-        try:
-            return self.create(request, *args, **kwargs)
-        except Exception as e:
-            raise Exception(request)
+    # def post(self, request, *args, **kwargs):
+    #     try:
+    #         return self.create(request, *args, **kwargs)
+    #     except Exception as e:
+    #         raise Exception(request)
 
 
 # HTTP POST, /accounts/userForm/
