@@ -6,6 +6,6 @@ app_name = 'accounts'  # namespace 추가
 
 urlpatterns = [
     path('userForm/', views.RegisterForm.as_view(), name='register-user-form'),
-    path('auth/', views.AuthView.as_view(), name='user-auth'),
+    #path('auth/', views.AuthView.as_view(), name='user-auth'),
 ]
 

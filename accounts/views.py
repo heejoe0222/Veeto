@@ -1,35 +1,19 @@
-from rest_framework import viewsets, permissions, generics, status
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 
-from accounts.models import TempUser, registerForm, StudentCardImage
+from accounts.models import TempUser
 from main.models import RoomCandidate
-from accounts.serializers import FormSerializer, ImageSerializer
-
-
-# HTTP POST, /accounts/auth/
-class AuthView(generics.CreateAPIView):
-    parser_classes = (MultiPartParser, FormParser)
-    queryset = StudentCardImage.objects.all()
-    serializer_class = ImageSerializer
-
-    # def post(self, request, *args, **kwargs):
-    #     try:
-    #         return self.create(request, *args, **kwargs)
-    #     except Exception as e:
-    #         raise Exception(request)
+from accounts.serializers import FormSerializer
 
 
 # HTTP POST, /accounts/userForm/
-# 이미지 주소나 pk 같이 받아서 폼 생성u
+# 이미지 주소나 pk 같이 받아서 폼 생성
 class RegisterForm(generics.CreateAPIView):
+    parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
-        # try:
         serializer = FormSerializer(data=request.data)
-        #     serializer.is_valid(raise_exception=True)
-        # except Exception:
-        #     raise Exception(request)
 
         if serializer.is_valid():
             form = serializer.save()
@@ -50,6 +34,7 @@ class RegisterForm(generics.CreateAPIView):
                 desired_room = desired_room,
                 desired_gender_ratio = form.desired_gender_ratio
             ).save()
+
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

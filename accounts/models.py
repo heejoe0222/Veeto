@@ -11,14 +11,6 @@ class University(models.Model):
         return self.school_name
 
 
-class StudentCardImage(models.Model):
-    image = models.ImageField(upload_to='auth/%Y/%m/%d', null=False)
-    username = models.CharField(max_length=20, default="name")
-
-    def __str__(self):
-        return self.image.name
-
-
 class registerForm(models.Model):
     user_name = models.CharField(max_length=10)
     user_nickname = models.CharField(max_length=5) #unique=True
@@ -30,7 +22,7 @@ class registerForm(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='F')
     phone_num = models.CharField(max_length=11) #unique=True
-    studentCard_image = models.ForeignKey(StudentCardImage, on_delete=models.PROTECT)
+    studentCard_image = models.ImageField(upload_to='auth/%Y/%m/%d', null=False)
 
     date = models.DateField()
     time = models.TimeField()
