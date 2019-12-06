@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
-
 from rest_framework.parsers import MultiPartParser, FormParser
+
 from accounts.models import TempUser, registerForm, StudentCardImage
 from main.models import RoomCandidate
 from accounts.serializers import FormSerializer, ImageSerializer

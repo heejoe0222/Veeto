@@ -1,3 +1,5 @@
+import tempfile
+
 from rest_framework import status
 from django.urls import reverse
 from rest_framework.test import APITestCase
@@ -6,6 +8,7 @@ from accounts.models import University
 from io import StringIO
 from PIL import Image
 from django.core.files.base import File
+
 
 # Create your tests here.
 
@@ -19,10 +22,11 @@ class TestFileUpload(APITestCase):
     @staticmethod
     def get_image_file(name='test.png', ext='png', size=(50, 50), color=(256, 0, 0)):
         file_obj = StringIO()
+        # image.save(name, ext)
+        # file_obj.seek(0)
         image = Image.new("RGBA", size=size, color=color)
-        image.save(file_obj, ext)
-        file_obj.seek(0)
-        return File(file_obj, name=name)
+        return File(image, name=name)
+
     '''
     def test_file_is_accepted(self):
         url = reverse('accounts:register-user-form')
@@ -47,8 +51,16 @@ class TestFileUpload(APITestCase):
 
     def test_image_only_is_accepted(self):
         url = reverse('accounts:user-auth')
-        image = self.get_image_file()
-        data = {'image':image}
+        # image = self.get_image_file()
+        #
+        # image = Image.new('RGB', (100, 100))
+        # tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+        # image.save(tmp_file)
+        # tmp_file.seek(0)
 
-        response = self.client.post( url, data, format='multipart')
+
+        with open('C:\\Users\\heejo\\Pictures\\mvp_wireframe.png','rb') as fp:
+            response = self.client.post(url, data = {'image': fp}, format='multipart')
+
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+

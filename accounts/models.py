@@ -13,6 +13,7 @@ class University(models.Model):
 
 class StudentCardImage(models.Model):
     image = models.ImageField(upload_to='auth/%Y/%m/%d', null=False)
+    username = models.CharField(max_length=20, default="name")
 
     def __str__(self):
         return self.image.name
