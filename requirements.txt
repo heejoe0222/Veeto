@@ -1,4 +1,5 @@
 alabaster==0.7.12
+asgiref==3.2.3
 astroid==2.3.3
 Babel==2.7.0
 bcrypt==3.1.7
@@ -8,7 +9,7 @@ cffi==1.13.2
 chardet==3.0.4
 colorama==0.4.1
 cryptography==2.8
-Django==2.2.7
+Django==3.0
 django-cors-headers==3.1.1
 django-filter==2.2.0
 djangorestframework==3.10.3
@@ -40,6 +41,7 @@ pytz==2019.3
 releases==1.6.1
 requests==2.22.0
 semantic-version==2.8.2
+sentry-sdk==0.13.4
 six==1.13.0
 snowballstemmer==2.0.0
 Sphinx==1.7.9
