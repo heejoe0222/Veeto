@@ -32,7 +32,8 @@ class RegisterForm(generics.CreateAPIView):
                 gender = form.gender,
                 phone_num = form.phone_num,
                 desired_room = desired_room,
-                desired_gender_ratio = form.desired_gender_ratio
+                desired_gender_ratio = form.desired_gender_ratio,
+                is_photoOK = form.is_photoOK,
             ).save()
 
             return Response(status=status.HTTP_201_CREATED)
