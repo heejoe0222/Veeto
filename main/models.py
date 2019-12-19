@@ -31,6 +31,9 @@ class RoomUser(models.Model):
     user = models.ForeignKey(TempUser, on_delete=models.PROTECT)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.user)+" | "+self.room.roomCandidate.__str__()
+
 '''
 class ActivityPlace(models.Model):
     name = models.CharField(max_length=30)
