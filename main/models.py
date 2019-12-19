@@ -24,7 +24,7 @@ class Room(models.Model):
     roomCandidate = models.ForeignKey(RoomCandidate, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.id+"| "+self.activity.name+"| "+str(self.date)+" "+str(self.time)
+        return str(self.id)+" | "+str(self.roomCandidate.activity.name)+" | "+str(self.roomCandidate.date)+" "+str(self.roomCandidate.time)
 
 
 class RoomUser(models.Model):
