@@ -6,6 +6,7 @@ from accounts.models import TempUser
 from main.models import RoomCandidate
 from accounts.serializers import FormSerializer
 
+from conf.slack import slack_notify
 
 # HTTP POST, /accounts/userForm/
 # 이미지 주소나 pk 같이 받아서 폼 생성
@@ -18,6 +19,12 @@ class RegisterForm(generics.CreateAPIView):
         if serializer.is_valid():
             form = serializer.save()
 
+            slack_message='[NEW] {}({})님이 {} {}에 진행되는 {} 방을 신청하셨습니다!'.format(
+                form.user_name, form.gender, form.date.strftime('%Y-%m-%d'), form.time.strftime("%H:00"), form.activity.__str__()
+            )
+            slack_notify(slack_message, '#register_alarm', username='뉴비토알림봇')
+
+            # 없는 방이면 만들어서 넣고 아님 찾아서 넣고
             desired_room = RoomCandidate.objects.get(
                 activity=serializer.data['activity'],
                 date = serializer.data['date'],
