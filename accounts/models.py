@@ -1,8 +1,5 @@
 from django.db import models
 
-#from django.contrib.auth.models import PermissionsMixin
-#from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-
 
 class University(models.Model):
     school_name = models.CharField(max_length=15)
@@ -11,7 +8,7 @@ class University(models.Model):
         return self.school_name
 
 
-class registerForm(models.Model):
+class RegisterForm(models.Model):
     user_name = models.CharField(max_length=10)
     user_nickname = models.CharField(max_length=5) #unique=True
     age = models.IntegerField()
@@ -29,7 +26,6 @@ class registerForm(models.Model):
     activity = models.ForeignKey("main.Activity", on_delete=models.PROTECT)
 
     desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 1, 1:1 2, 무관 3
-    is_photoOK = models.IntegerField(default=0) # 1일 때 동의, 0일 때 동의 x
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -50,7 +46,6 @@ class TempUser(models.Model):
 
     desired_room = models.ForeignKey('main.RoomCandidate', on_delete=models.PROTECT) #원하는 방 종류
     desired_gender_ratio = models.IntegerField(verbose_name="희망 성비") #동성 1, 1:1 2, 무관 3
-    is_photoOK = models.IntegerField(default=0) # 1일 때 동의, 0일 때 동의 x
     university_auth = models.BooleanField(default=False) #학교 인증했는지 여부
 
     def __str__(self):
